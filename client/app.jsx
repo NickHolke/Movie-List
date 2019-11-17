@@ -16,6 +16,7 @@ class App extends React.Component {
         this.inputHandler = this.inputHandler.bind(this);
         this.showAllHandler = this.showAllHandler.bind(this);
         this.tabHandler = this.tabHandler.bind(this);
+        this.watchHandler = this.watchHandler.bind(this);
     }
 
     searchHandler(e) {
@@ -36,7 +37,7 @@ class App extends React.Component {
 
     inputHandler(e) {
         let title = document.querySelector('#inputBar').value;
-        let newMovie = [{title: title, show: true}];
+        let newMovie = [{title: title, show: true, watched: false}];
         document.querySelector('#inputBar').value = '';
 
         this.setState((state) => {
@@ -70,16 +71,34 @@ class App extends React.Component {
         this.setState({movies: displayedMovies, activeTab: e.target.innerHTML});
     }
 
+    watchHandler(e) {
+        console.log(this.state);
+       if (e.target.classList.contains('selectedButton')) {
+        e.target.classList.remove('selectedButton');
+       } else {
+        e.target.classList.add('selectedButton');
+       }
+       let title = e.target.parentNode.textContent.replace('Watched', '').trim();
+
+        let watchedMovies = this.state.movies.map((movie) => {
+            if (movie.title === title) {
+                movie.watched = !movie.watched
+            }
+            return movie;
+        })
+        this.setState({movies: watchedMovies}); 
+    }
+
     render() {
         return (
             <div>
                 <SearchBar searchHandler={this.searchHandler}/>
                 <InputMovie inputHandler={this.inputHandler} showAllHandler={this.showAllHandler}/>
-                <div className="tabs" id="allTab" onClick={this.tabHandler}>All Movies</div>
+                <div className="tabs selectedTab" id="allTab" onClick={this.tabHandler}>All Movies</div>
                 <div className="tabs" id="watchedTab" onClick={this.tabHandler}>Watched</div>
                 <div className="tabs" id="notWatchedTab" onClick={this.tabHandler}>Not Watched</div>
 
-                <Tabs activeTab={this.state.activeTab} movies={this.state.movies}/>
+                <Tabs activeTab={this.state.activeTab} movies={this.state.movies} watchHandler={this.watchHandler}/>
             </div>
         )
     }
