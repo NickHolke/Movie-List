@@ -13,30 +13,26 @@ class App extends React.Component {
         }
         this.searchHandler = this.searchHandler.bind(this);
         this.inputHandler = this.inputHandler.bind(this);
+        this.showAllHandler = this.showAllHandler.bind(this);
     }
 
     searchHandler(e) {
         let query = document.querySelector('#searchbar').value;
         document.querySelector('#searchbar').value = '';
 
-        let matches = [];
-        for (let i = 0; i < this.state.movies.length; i++) {
-            let title = this.state.movies[i].title.toLowerCase();
-            if (title.includes(query.toLowerCase())) {
-                matches.push(this.state.movies[i]);
+        let displayedMovies = this.state.movies.map((movie) => {
+            if (!movie.title.toLowerCase().includes(query.toLowerCase())) {
+                movie.show = false;
             }
-        }
-        if (matches.length === 0) {
-            alert('no movies by that name found');
-        } else {
-            this.setState({movies: matches})
-        }
-        
+            return movie;
+        })
+
+        this.setState({movies: displayedMovies}); 
     }
 
     inputHandler(e) {
         let title = document.querySelector('#inputBar').value;
-        let newMovie = [{title: title}];
+        let newMovie = [{title: title, show: true}];
         document.querySelector('#inputBar').value = '';
 
         this.setState((state) => {
@@ -44,15 +40,26 @@ class App extends React.Component {
         })
     }
 
+    showAllHandler() {
+        let displayedMovies = this.state.movies.map((movie) => {
+            movie.show = true;
+            return movie;
+        })
+
+        this.setState({movies: displayedMovies}); 
+    }
+
     render() {
         return (
             <div>
                 <SearchBar searchHandler={this.searchHandler}/>
-                <InputMovie inputHandler={this.inputHandler}/>
+                <InputMovie inputHandler={this.inputHandler} showAllHandler={this.showAllHandler}/>
                 <ul>
                     {console.log(this.state)}
                     {this.state.movies.length === 0 ? 'Add a movie' : this.state.movies.map((movie, idx) => {
-                        return <Movie movie={movie.title} key={idx}/>
+                        if (movie.show) {
+                            return <Movie movie={movie.title} key={idx}/>
+                        }
                     })}
                 </ul>
             </div>
