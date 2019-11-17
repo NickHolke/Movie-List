@@ -1,7 +1,7 @@
 import React from 'react';
-import Movie from './movie.jsx';
 import SearchBar from './searchbar.jsx';
 import InputMovie from './inputMovie.jsx';
+import Tabs from './tabs.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -9,11 +9,13 @@ class App extends React.Component {
 
         this.state = {
             movies: [
-            ]
+            ],
+            activeTab: 'All Movies'
         }
         this.searchHandler = this.searchHandler.bind(this);
         this.inputHandler = this.inputHandler.bind(this);
         this.showAllHandler = this.showAllHandler.bind(this);
+        this.tabHandler = this.tabHandler.bind(this);
     }
 
     searchHandler(e) {
@@ -23,6 +25,8 @@ class App extends React.Component {
         let displayedMovies = this.state.movies.map((movie) => {
             if (!movie.title.toLowerCase().includes(query.toLowerCase())) {
                 movie.show = false;
+            } else {
+                movie.show = true;
             }
             return movie;
         })
@@ -49,19 +53,33 @@ class App extends React.Component {
         this.setState({movies: displayedMovies}); 
     }
 
+    tabHandler(e) {
+        let tabs = document.querySelectorAll('.tabs');
+        for (let i = 0; i < tabs.length; i++) {
+            if (tabs[i].classList.contains('selectedTab')) {
+                tabs[i].classList.remove('selectedTab');
+            }
+        }
+        e.target.classList.add("selectedTab");
+
+        let displayedMovies = this.state.movies.map((movie) => {
+            movie.show = true;
+            return movie;
+        })
+
+        this.setState({movies: displayedMovies, activeTab: e.target.innerHTML});
+    }
+
     render() {
         return (
             <div>
                 <SearchBar searchHandler={this.searchHandler}/>
                 <InputMovie inputHandler={this.inputHandler} showAllHandler={this.showAllHandler}/>
-                <ul>
-                    {console.log(this.state)}
-                    {this.state.movies.length === 0 ? 'Add a movie' : this.state.movies.map((movie, idx) => {
-                        if (movie.show) {
-                            return <Movie movie={movie.title} key={idx}/>
-                        }
-                    })}
-                </ul>
+                <div className="tabs" id="allTab" onClick={this.tabHandler}>All Movies</div>
+                <div className="tabs" id="watchedTab" onClick={this.tabHandler}>Watched</div>
+                <div className="tabs" id="notWatchedTab" onClick={this.tabHandler}>Not Watched</div>
+
+                <Tabs activeTab={this.state.activeTab} movies={this.state.movies}/>
             </div>
         )
     }
