@@ -72,12 +72,6 @@ class App extends React.Component {
     }
 
     watchHandler(e) {
-        console.log(this.state);
-       if (e.target.classList.contains('selectedButton')) {
-        e.target.classList.remove('selectedButton');
-       } else {
-        e.target.classList.add('selectedButton');
-       }
        let title = e.target.parentNode.textContent.replace('Watched', '').trim();
 
         let watchedMovies = this.state.movies.map((movie) => {

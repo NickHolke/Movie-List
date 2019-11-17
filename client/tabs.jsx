@@ -10,7 +10,7 @@ let Tabs = function({activeTab, movies, watchHandler}) {
             <ul>
                 {movies.map((movie, idx) => {
                     if (movie.show) {
-                        return <Movie movie={movie.title} watchHandler={watchHandler} key={idx}/>
+                        return <Movie movie={movie} watchHandler={watchHandler} key={idx}/>
                     }
                 })
                 }
@@ -20,7 +20,7 @@ let Tabs = function({activeTab, movies, watchHandler}) {
             <ul>
                 {movies.map((movie, idx) => {
                     if (movie.watched && movie.show) {
-                        return <Movie movie={movie.title} watchHandler={watchHandler} key={idx}/>
+                        return <Movie movie={movie} watchHandler={watchHandler} key={idx}/>
                     }
                 })}
             </ul>
@@ -30,7 +30,7 @@ let Tabs = function({activeTab, movies, watchHandler}) {
                 <ul>
                     {movies.map((movie, idx) => {
                         if (!movie.watched && movie.show) {
-                            return <Movie movie={movie.title} watchHandler={watchHandler} key={idx}/>
+                            return <Movie movie={movie} watchHandler={watchHandler} key={idx}/>
                         }
                     })}
                 </ul>
