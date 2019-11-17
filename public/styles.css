@@ -1,0 +1,43 @@
+body {
+    font-family: 'Marker felt';
+}
+
+ul {
+    list-style-type: none;
+    font-size: 30px;
+}
+
+li {
+    padding: 20px;
+    border: 1px solid grey;
+    width: 400px;
+}
+
+#title {
+    text-decoration: underline;
+    font-size: 70px;
+    background-color: #DEDEDE;
+    width: 650px;
+}
+#search {
+    margin-top: 15px;
+    margin-left: 40px;
+}
+
+#searchbar {
+    height: 25px;
+    width: 200px;
+    font-size: 18px;
+}
+
+#searchbutton{
+    padding-bottom: 3px;
+    padding-top: 3px;
+    font-size: 18px;
+    margin-left: 6px;
+}
+
+#searchbutton:hover{
+    cursor: pointer;
+}
+

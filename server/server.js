@@ -3,7 +3,7 @@ const app = express();
 const port = 4000;
 const path = require('path');
 
-app.get('/', (req,res) => res.send('Hello there'));
+//app.get('/', (req,res) => res.send('Hello there'));
 
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 
