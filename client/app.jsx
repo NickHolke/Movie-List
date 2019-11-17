@@ -1,6 +1,7 @@
 import React from 'react';
 import Movie from './movie.jsx';
 import SearchBar from './searchbar.jsx';
+import InputMovie from './inputMovie.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -8,18 +9,13 @@ class App extends React.Component {
 
         this.state = {
             movies: [
-                {title: 'Mean Girls'},
-                {title: 'Hackers'},
-                {title: 'The Grey'},
-                {title: 'Sunshine'},
-                {title: 'Ex Machina'},
             ]
         }
         this.searchHandler = this.searchHandler.bind(this);
+        this.inputHandler = this.inputHandler.bind(this);
     }
 
     searchHandler(e) {
-        e.preventDefault();
         let query = document.querySelector('#searchbar').value;
         document.querySelector('#searchbar').value = '';
 
@@ -38,12 +34,24 @@ class App extends React.Component {
         
     }
 
+    inputHandler(e) {
+        let title = document.querySelector('#inputBar').value;
+        let newMovie = [{title: title}];
+        document.querySelector('#inputBar').value = '';
+
+        this.setState((state) => {
+            return {movies: state.movies.concat(newMovie)}
+        })
+    }
+
     render() {
         return (
             <div>
                 <SearchBar searchHandler={this.searchHandler}/>
+                <InputMovie inputHandler={this.inputHandler}/>
                 <ul>
-                    {this.state.movies.map((movie, idx) => {
+                    {console.log(this.state)}
+                    {this.state.movies.length === 0 ? 'Add a movie' : this.state.movies.map((movie, idx) => {
                         return <Movie movie={movie.title} key={idx}/>
                     })}
                 </ul>
