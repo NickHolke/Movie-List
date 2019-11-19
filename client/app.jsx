@@ -61,11 +61,9 @@ class App extends React.Component {
         this.setState({movies: displayedMovies, activeTab: e.target.innerHTML});
     }
 
-    watchHandler(e) {
-       let title = e.target.previousSibling.innerText;
-
+    watchHandler(currentMovie) {
         let watchedMovies = this.state.movies.map((movie) => {
-            if (movie.title === title) {
+            if (movie.title === currentMovie.title) {
                 movie.watched = !movie.watched
             }
             return movie;

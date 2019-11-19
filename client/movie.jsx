@@ -6,7 +6,6 @@ class Movie extends React.Component {
         super(props)
 
         this.state = {
-            watched: this.props.movie.watched, 
             showDetails: false
         }
         this.onClicked = this.onClicked.bind(this);
@@ -19,21 +18,11 @@ class Movie extends React.Component {
     }
 
     render() {
-        if (this.props.movie.watched) {
-            return (
-                <li><span id="movieTitle" onClick={this.onClicked}>{this.props.movie.title}</span> 
-                    <button className="watchedButton selectedButton" onClick={this.props.watchHandler}>Watched</button>
-                    {this.state.showDetails && <MovieInfo/>}
-                </li>
-             )
-        } else {
-            return (
-                <li><span id="movieTitle" onClick={this.onClicked}>{this.props.movie.title}</span> 
-                    <button className="watchedButton" onClick={this.props.watchHandler}>Watched</button>
-                    {this.state.showDetails && <MovieInfo/>}
-                </li>
-            )
-        }
+        return (
+            <li><span id="movieTitle" onClick={this.onClicked}>{this.props.movie.title}</span> 
+                {this.state.showDetails && <MovieInfo movie={this.props.movie} watchHandler={this.props.watchHandler}/>}
+            </li>
+        )
     }
 }
 
