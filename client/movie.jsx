@@ -20,7 +20,8 @@ class Movie extends React.Component {
     render() {
         return (
             <li><span id="movieTitle" onClick={this.onClicked}>{this.props.movie.title}</span> 
-                {this.state.showDetails && <MovieInfo movie={this.props.movie} watchHandler={this.props.watchHandler}/>}
+                {this.state.showDetails && 
+                <MovieInfo movie={this.props.movie} watchHandler={this.props.watchHandler}/>}
             </li>
         )
     }

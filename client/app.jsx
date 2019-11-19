@@ -2,6 +2,11 @@ import React from 'react';
 import SearchBar from './searchbar.jsx';
 import InputMovie from './inputMovie.jsx';
 import Tabs from './tabs.jsx';
+const API_KEY = '1aa4b71d59342b08b19dea8b16bcf4aa';
+let str = encodeURI('Lord of the rings');
+const baseURL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=`;
+
+
 
 class App extends React.Component {
     constructor(props) {
@@ -17,6 +22,12 @@ class App extends React.Component {
         this.tabHandler = this.tabHandler.bind(this);
         this.watchHandler = this.watchHandler.bind(this);
     }
+
+    // componentDidMount() {
+    //     fetch(URL).then((response) => response.json())
+    //     .then((data) => console.log(data))
+    //     .catch((err) => console.log(err));
+    // }
 
     searchHandler() {
         let query = document.querySelector('#searchbar').value;
@@ -35,13 +46,28 @@ class App extends React.Component {
     }
 
     inputHandler() {
-        let title = document.querySelector('#inputBar').value;
-        let newMovie = [{title: title, show: true, watched: false}];
+        let query = encodeURI(document.querySelector('#inputBar').value);
+        let url = baseURL + query;
         document.querySelector('#inputBar').value = '';
 
-        this.setState((state) => {
-            return {movies: state.movies.concat(newMovie)}
-        })
+        fetch(url).then((response) => response.json())
+        .then((data) => {
+            let movieData = data.results[0];
+            console.log(movieData)
+            if (movieData !== undefined) {
+                var newMovie = {
+                    title: movieData.title,
+                    id: movieData.id,
+                    show: true,
+                    watched: false,
+                    info: [movieData.overview, movieData.vote_average, movieData.release_date]
+                }
+            }
+            this.setState((state) => {
+                return {movies: state.movies.concat(newMovie)}
+            })
+            console.log(this.state);
+        }).catch((err) => console.log(err));
     }
 
     tabHandler(e) {
@@ -79,7 +105,6 @@ class App extends React.Component {
                 <div className="tabs selectedTab" id="allTab" onClick={this.tabHandler}>All Movies</div>
                 <div className="tabs" id="watchedTab" onClick={this.tabHandler}>Watched</div>
                 <div className="tabs" id="notWatchedTab" onClick={this.tabHandler}>Not Watched</div>
-
                 <Tabs activeTab={this.state.activeTab} movies={this.state.movies} watchHandler={this.watchHandler}/>
             </div>
         )
