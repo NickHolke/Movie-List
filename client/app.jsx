@@ -14,12 +14,11 @@ class App extends React.Component {
         }
         this.searchHandler = this.searchHandler.bind(this);
         this.inputHandler = this.inputHandler.bind(this);
-        this.showAllHandler = this.showAllHandler.bind(this);
         this.tabHandler = this.tabHandler.bind(this);
         this.watchHandler = this.watchHandler.bind(this);
     }
 
-    searchHandler(e) {
+    searchHandler() {
         let query = document.querySelector('#searchbar').value;
         document.querySelector('#searchbar').value = '';
 
@@ -35,7 +34,7 @@ class App extends React.Component {
         this.setState({movies: displayedMovies}); 
     }
 
-    inputHandler(e) {
+    inputHandler() {
         let title = document.querySelector('#inputBar').value;
         let newMovie = [{title: title, show: true, watched: false}];
         document.querySelector('#inputBar').value = '';
@@ -43,15 +42,6 @@ class App extends React.Component {
         this.setState((state) => {
             return {movies: state.movies.concat(newMovie)}
         })
-    }
-
-    showAllHandler() {
-        let displayedMovies = this.state.movies.map((movie) => {
-            movie.show = true;
-            return movie;
-        })
-
-        this.setState({movies: displayedMovies}); 
     }
 
     tabHandler(e) {
@@ -72,7 +62,7 @@ class App extends React.Component {
     }
 
     watchHandler(e) {
-       let title = e.target.parentNode.textContent.replace('Watched', '').trim();
+       let title = e.target.previousSibling.innerText;
 
         let watchedMovies = this.state.movies.map((movie) => {
             if (movie.title === title) {
@@ -87,7 +77,7 @@ class App extends React.Component {
         return (
             <div>
                 <SearchBar searchHandler={this.searchHandler}/>
-                <InputMovie inputHandler={this.inputHandler} showAllHandler={this.showAllHandler}/>
+                <InputMovie inputHandler={this.inputHandler}/>
                 <div className="tabs selectedTab" id="allTab" onClick={this.tabHandler}>All Movies</div>
                 <div className="tabs" id="watchedTab" onClick={this.tabHandler}>Watched</div>
                 <div className="tabs" id="notWatchedTab" onClick={this.tabHandler}>Not Watched</div>

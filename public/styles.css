@@ -1,7 +1,9 @@
 body {
     font-family: 'Marker felt';
 }
-
+span:hover {
+    cursor:pointer;
+}
 ul {
     list-style-type: none;
     font-size: 30px;
@@ -13,31 +15,59 @@ li {
     width: 400px;
 }
 
+.tabs {
+    display: inline-block;
+    font-size: 24px;
+    padding: 8px;
+    border: 1px solid grey;
+    width: 160px;
+    text-align: center;
+    margin-top: 14px;
+}
+
+.tabs:hover {
+    cursor: pointer;
+}
+
+.selectedTab {
+    background: green;
+    color: white
+}
+
+.selectedButton {
+    background: green;
+    color: white
+}
+
+.watchedButton {
+    float: right;
+}
+
 #title {
     text-decoration: underline;
     font-size: 70px;
     background-color: #DEDEDE;
     width: 650px;
 }
-#search {
+#search, #inputField {
     margin-top: 15px;
     margin-left: 40px;
 }
 
-#searchbar {
+input {
     height: 25px;
     width: 200px;
     font-size: 18px;
 }
 
-#searchbutton{
+button {
     padding-bottom: 3px;
     padding-top: 3px;
     font-size: 18px;
     margin-left: 6px;
 }
 
-#searchbutton:hover{
+button:hover{
     cursor: pointer;
 }
 

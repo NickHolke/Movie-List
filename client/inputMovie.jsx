@@ -1,6 +1,6 @@
 import React from 'react';
 
-let InputMovie = function({inputHandler, showAllHandler}) {
+let InputMovie = function({inputHandler}) {
 
     return (
         <div id="inputField">
