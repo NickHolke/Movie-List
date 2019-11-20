@@ -6,8 +6,6 @@ import axios from 'axios';
 const API_KEY = '1aa4b71d59342b08b19dea8b16bcf4aa';
 const baseURL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=`;
 
-
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -51,7 +49,7 @@ class App extends React.Component {
         document.querySelector('#inputBar').value = '';
 
         axios.get(url).then((response) => {
-            console.log(response);
+            console.log(response.data.results[0]);
             let movieData = response.data.results[0];
             if (movieData !== undefined) {
                 var newMovie = {
@@ -59,7 +57,8 @@ class App extends React.Component {
                     id: movieData.id,
                     show: true,
                     watched: false,
-                    info: [movieData.overview, movieData.vote_average, movieData.release_date]
+                    info: [movieData.overview, movieData.vote_average, 
+                            movieData.release_date, movieData.poster_path]
                 }
             }
             this.setState((state) => {

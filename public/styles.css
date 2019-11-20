@@ -59,6 +59,12 @@ li {
     font-family: Arial;
 }
 
+#thumbnail{
+    height: 200px;
+    float: left;
+    margin-right: 10px;
+}
+
 input {
     height: 25px;
     width: 200px;
