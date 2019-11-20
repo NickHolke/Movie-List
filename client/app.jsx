@@ -2,8 +2,8 @@ import React from 'react';
 import SearchBar from './searchbar.jsx';
 import InputMovie from './inputMovie.jsx';
 import Tabs from './tabs.jsx';
+import axios from 'axios';
 const API_KEY = '1aa4b71d59342b08b19dea8b16bcf4aa';
-let str = encodeURI('Lord of the rings');
 const baseURL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=`;
 
 
@@ -50,10 +50,9 @@ class App extends React.Component {
         let url = baseURL + query;
         document.querySelector('#inputBar').value = '';
 
-        fetch(url).then((response) => response.json())
-        .then((data) => {
-            let movieData = data.results[0];
-            console.log(movieData)
+        axios.get(url).then((response) => {
+            console.log(response);
+            let movieData = response.data.results[0];
             if (movieData !== undefined) {
                 var newMovie = {
                     title: movieData.title,
@@ -66,10 +65,9 @@ class App extends React.Component {
             this.setState((state) => {
                 return {movies: state.movies.concat(newMovie)}
             })
-            console.log(this.state);
         }).catch((err) => console.log(err));
     }
-
+   
     tabHandler(e) {
         let tabs = document.querySelectorAll('.tabs');
         for (let i = 0; i < tabs.length; i++) {
