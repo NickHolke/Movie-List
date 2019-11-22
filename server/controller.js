@@ -21,7 +21,13 @@ let controller = {
         })
     },
     get: function(req, res) {
-        
+        model.get((err, result)=> {
+            if (err) {
+                console.log(err);
+                res.send('problem with database')
+            }
+            res.send(result);
+        })
     }
 }
 
